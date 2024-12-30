@@ -9,7 +9,7 @@ const Vision: React.FC = () => {
       {/* Header Section */}
       <header
         className="relative w-full h-64 bg-cover bg-center"
-        style={{ backgroundImage: "url('/vision-banner.jpg')" }}
+        style={{ backgroundImage: "url('/mountain.jpg')" }}
       >
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-200"></div>
