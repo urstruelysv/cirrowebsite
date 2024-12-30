@@ -1,9 +1,15 @@
 import Hero from "./components/Hero";
+import Main from "./components/Main";
+import Middle from "./components/Middle";
 
 export default function Home() {
   return (
-    <div className="h-screen flex justify-center items-center bg-blue-200">
-      <Hero />
+    <div>
+      <div className="h-screen justify-center items-center bg-gradient-to-b from-transparent to-blue-200">
+        <Hero />
+      </div>
+      <Main />
+      <Middle />
     </div>
   );
 }

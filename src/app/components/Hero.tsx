@@ -109,3 +109,5 @@ export default function Hero() {
     </section>
   );
 }
+
+// Add Main.tsx page at the bottom
