@@ -2,21 +2,21 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
-const Ourstory: React.FC = () => {
+const OurStory: React.FC = () => {
   return (
     <div className="bg-blue-200 min-h-screen font-sans">
       {/* Header Section */}
-      <header
-        className="relative w-full h-64 bg-cover bg-center"
-        style={{ backgroundImage: "url('/mountain.png')" }}
-      >
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-200"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        ></motion.div>
+      <header className="relative w-full h-64">
+        <Image
+          src="/mountain1.jpeg"
+          alt="Mountain Background"
+          layout="fill"
+          objectFit="cover"
+          className="absolute inset-0"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-200"></div>
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
           <motion.h1
             className="text-5xl font-bold text-blue-700 mt-4 text-center"
@@ -51,7 +51,7 @@ const Ourstory: React.FC = () => {
               icon: "♻️",
               title: "Sustainability Commitment",
               description:
-                "Made from 100% recycled PET, our bottles reflect our commitment to sustainability",
+                "Made from 100% recycled PET, our bottles reflect our commitment to sustainability.",
             },
           ].map((feature, index) => (
             <motion.div
@@ -76,10 +76,29 @@ const Ourstory: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          Cirro was born from a desire to elevate the everyday hydration
-          experience. Inspired by the highest and purest clouds in the sky, we
-          bring you water that stands above the rest in purity, taste, and
-          elegance.
+          <motion.p
+            className="text-lg leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            Cirro was born from a simple yet powerful vision – to elevate the
+            everyday act of hydration into something extraordinary. The idea
+            took root on a quiet, peaceful day, when a lone observer gazed at
+            the sky and marveled at the cirro clouds – high, pure, and graceful,
+            floating above everything else.
+          </motion.p>
+          <motion.p
+            className="text-lg leading-relaxed mt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Inspired by these clouds, which symbolize the highest form of purity
+            and elegance, a commitment was made: to create water that would
+            embody the same level of purity, taste, and refinement. Thus, Cirro
+            Wtr was born, crafted to stand above the rest in every way.
+          </motion.p>
         </motion.div>
       </section>
 
@@ -122,4 +141,4 @@ const Ourstory: React.FC = () => {
   );
 };
 
-export default Ourstory;
+export default OurStory;

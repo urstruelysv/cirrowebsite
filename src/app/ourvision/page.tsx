@@ -1,28 +1,39 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Vision: React.FC = () => {
   return (
     <div className="bg-white min-h-screen font-sans">
       {/* Header Section */}
-      <header
-        className="relative w-full h-64 bg-cover bg-center"
-        style={{ backgroundImage: "url('/mountain.jpg')" }}
-      >
+      <header className="relative w-full h-64">
+        {/* Image Component for Background */}
+        <Image
+          src="/mountain1.jpeg" // Make sure this image is inside the 'public' folder
+          alt="Mountain Background"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+          priority
+        />
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-200"></div>
+
+        {/* Vision Text */}
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
           <motion.h1
-            className="text-6xl font-bold text-white mt-4 text-center"
+            className="text-6xl font-bold text-blue-900 mt-4 text-center"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             Our Vision
           </motion.h1>
-          <p className="text-lg mt-2 text-center text-white">
+          <p className="text-lg mt-2 text-center text-blue-700">
             Empowering a healthier and sustainable future, one drop at a time.
           </p>
         </div>
@@ -149,12 +160,12 @@ const Vision: React.FC = () => {
                 a distributor, a retailer, or just someone passionate about
                 purity, there’s a place for you in the Cirro family.
               </p>
-              <a
-                href="/distributorship"
+              <Link
+                href="/dealership"
                 className="bg-orange-500 text-white px-8 py-3 rounded-lg text-lg font-semibold"
               >
                 Apply for Distributorship
-              </a>
+              </Link>
             </div>
           </section>
         </div>

@@ -9,19 +9,19 @@ const ApplyForDistributorship: React.FC = () => {
       {/* Header Section */}
       <header
         className="relative w-full h-80 bg-cover bg-center"
-        style={{ backgroundImage: "url('/distributorship-banner.jpg')" }}
+        style={{ backgroundImage: "url('/mountain2.jpeg')" }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-700 opacity-50"></div>
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white">
           <motion.h1
-            className="text-5xl font-extrabold text-center mt-4"
+            className="text-5xl font-extrabold text-center text-blue-900 mt-4"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
             Apply for Distributorship
           </motion.h1>
-          <p className="text-xl mt-2 text-center">
+          <p className="text-xl mt-2 text-center text-blue-700">
             Join India's fastest growing packaged water brand and expand your
             business horizons.
           </p>

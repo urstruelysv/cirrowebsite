@@ -1,9 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+
+  const links = [
+    { href: "/ourstory", label: "Our Story" },
+    { href: "/giveback", label: "Give Back" },
+    { href: "/ourvision", label: "Our Vision" },
+    { href: "/faqs", label: "FAQs" },
+    { href: "/contactus", label: "Contact Us" },
+    { href: "/dealership", label: "Dealership" },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-lg">
@@ -11,48 +23,27 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <img className="h-8 w-auto" src="logo.png" alt="Logo" />
+            <Link href="/">
+              <img className="h-8 w-auto" src="/logo.png" alt="Logo" />
+            </Link>
           </div>
 
           {/* Desktop menu */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a
-                href="#"
-                className="text-black hover:bg-sky-200 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Our Story
-              </a>
-              <a
-                href="/ourstory#"
-                className="text-black hover:bg-sky-200 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Give Back
-              </a>
-              <a
-                href="#"
-                className="text-black hover:bg-sky-200 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Our Vision
-              </a>
-              <a
-                href="#"
-                className="text-black hover:bg-sky-200 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                FAQs
-              </a>
-              <a
-                href="#"
-                className="text-black hover:bg-sky-200 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Contact Us
-              </a>
-              <a
-                href="#"
-                className="text-black hover:bg-sky-200 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Dealership
-              </a>
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`${
+                    pathname === link.href
+                      ? "bg-sky-200 text-black"
+                      : "text-black hover:bg-sky-200"
+                  } px-3 py-2 rounded-md text-sm font-medium`}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -85,45 +76,22 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile menu, show/hide based on menu state */}
+      {/* Mobile menu */}
       <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <a
-            href="#"
-            className="text-black hover:bg-sky-200 block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Our Story
-          </a>
-          <a
-            href="#"
-            className="text-black hover:bg-sky-200 block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Give Back
-          </a>
-          <a
-            href="#"
-            className="text-black hover:bg-sky-200 block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Our Vision
-          </a>
-          <a
-            href="#"
-            className="text-black hover:bg-sky-200 block px-3 py-2 rounded-md text-base font-medium"
-          >
-            FAQs
-          </a>
-          <a
-            href="#"
-            className="text-black hover:bg-sky-200 block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Contact Us
-          </a>
-          <a
-            href="#"
-            className="text-black hover:bg-sky-200 block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Dealership
-          </a>
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`${
+                pathname === link.href
+                  ? "bg-sky-200 text-black"
+                  : "text-black hover:bg-sky-200"
+              } block px-3 py-2 rounded-md text-base font-medium`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>

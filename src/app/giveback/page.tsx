@@ -9,7 +9,7 @@ const GiveBackPage: React.FC = () => {
     <>
       {/* Header Section */}
       <header
-        className="relative w-full h-64 bg-cover bg-center"
+        className="relative bg-gradient-to-b from-transparent to-blue-200 w-full h-64 bg-cover bg-center"
         style={{ backgroundImage: "url('/mountain.png')" }}
       >
         <motion.div
