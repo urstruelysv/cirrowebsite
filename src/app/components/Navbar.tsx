@@ -18,13 +18,13 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white shadow-lg">
+    <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <img className="h-8 w-auto" src="/logo.png" alt="Logo" />
+              <img className="h-12 w-auto" src="/logo.png" alt="Logo" />
             </Link>
           </div>
 
