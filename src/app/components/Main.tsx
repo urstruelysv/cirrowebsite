@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 const CirroSection = () => {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center py-10 px-5 md:px-10 bg-gradient-to-b from-blue-100 to-white">
+    <section className="flex flex-col md:flex-row items-center justify-center py-6 px-5 md:px-10 bg-gradient-to-b from-blue-100 to-white">
       {/* Left Section: Logo with Background */}
       <motion.div
-        className="w-full md:w-1/2 flex items-center justify-center relative overflow-hidden mb-8 md:mb-0"
+        className="w-full md:w-1/2 flex items-center justify-center relative overflow-hidden mb-6 md:mb-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}

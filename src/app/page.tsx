@@ -14,7 +14,7 @@ export default function Home() {
       </section>
 
       {/* Main Section */}
-      <section className="min-h-screen">
+      <section className="min-h-screen bg-blue-200">
         <Main />
       </section>
 
@@ -24,7 +24,7 @@ export default function Home() {
       </section>
 
       {/* Middle Section */}
-      <section className="min-h-screen">
+      <section className="min-h-screen ">
         <Middle />
       </section>
     </div>
