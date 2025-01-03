@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 const CirroSection = () => {
   return (
-    <section className="h-[70vh] flex shadow-lg">
+    <section className="flex flex-col md:flex-row items-center justify-center py-10 px-5 md:px-10 bg-gradient-to-b from-blue-100 to-white">
       {/* Left Section: Logo with Background */}
       <motion.div
-        className="w-full md:w-1/2 bg-blue-200 flex items-center justify-center relative overflow-hidden"
+        className="w-full md:w-1/2 flex items-center justify-center relative overflow-hidden mb-8 md:mb-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -30,7 +30,7 @@ const CirroSection = () => {
 
       {/* Right Section: Text Content */}
       <motion.div
-        className="w-full md:w-1/2 bg-white flex flex-col justify-center p-8 md:p-10"
+        className="w-full md:w-1/2 bg-white flex flex-col justify-center px-6 md:px-10"
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}

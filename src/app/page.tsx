@@ -19,7 +19,7 @@ export default function Home() {
       </section>
 
       {/* Giveback Section */}
-      <section className="min-h-screen">
+      <section className="bg-blue-200 min-h-screen">
         <Giveback />
       </section>
 
