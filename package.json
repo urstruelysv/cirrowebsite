@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker-build": "docker build -t saivamshigannoji/cirro-website .",
+    "test-prod": "next build && next start"
   },
   "dependencies": {
     "@hapi/hoek": "^11.0.7",
