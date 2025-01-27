@@ -9,17 +9,17 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="min-h-screen flex justify-center items-center bg-gradient-to-b from-transparent to-blue-200">
+      <section className="flex justify-center items-center bg-gradient-to-b from-transparent to-blue-200">
         <Hero />
       </section>
 
       {/* Main Section */}
-      <section className="min-h-screen bg-blue-200">
+      <section className="bg-blue-200">
         <Main />
       </section>
 
       {/* Giveback Section */}
-      <section className="bg-blue-200 min-h-screen">
+      <section className="bg-blue-200 ">
         <Giveback />
       </section>
 

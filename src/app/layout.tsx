@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "cirro water : purest of all",
+  title: "cirro wtr : purest of all",
   description:
     "Cirro was born from a desire to elevate the everyday hydration experience. Inspired by the highest and purest clouds in the sky, we bring you water that stands above the rest in purity, taste, and elegance.Elevate your hydration with Cirro – water that’s as elegant as it is refreshing",
 };

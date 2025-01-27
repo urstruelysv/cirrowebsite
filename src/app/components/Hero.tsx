@@ -21,7 +21,7 @@ export default function Hero() {
       <motion.img
         src="/centerimage.png"
         alt="Mountain Background"
-        className="absolute top-40 left-0 w-full h-full object-cover opacity-60"
+        className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
         style={{ scale: mountainScale }}
       />
 
