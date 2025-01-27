@@ -1,9 +1,99 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-const ApplyForDistributorship: React.FC = () => {
+const ApplyForDistributorship = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    pincode: "",
+    city: "",
+    state: "",
+  });
+
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    pincode: "",
+    city: "",
+    state: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name) {
+      newErrors.name = "Name is required";
+    } else if (formData.name.length < 5) {
+      newErrors.name = "Name must be at least 5 characters long";
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+
+    if (!formData.mobile) {
+      newErrors.mobile = "Mobile number is required";
+    } else if (!/^\d{10}$/.test(formData.mobile)) {
+      newErrors.mobile = "Mobile number is invalid";
+    }
+
+    if (!formData.pincode) {
+      newErrors.pincode = "Pincode is required";
+    } else if (!/^\d{6}$/.test(formData.pincode)) {
+      newErrors.pincode = "Pincode number is invalid";
+    }
+
+    if (!formData.city) {
+      newErrors.city = "City is required";
+    }
+
+    if (!formData.state) {
+      newErrors.state = "State is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      // Create email content with form data
+      const emailSubject = "New Distributorship Application";
+      const emailBody = `
+Name: ${formData.name}
+Email: ${formData.email}
+Mobile: ${formData.mobile}
+Pincode: ${formData.pincode}
+City: ${formData.city}
+State: ${formData.state}
+      `;
+
+      // Create mailto link
+      const mailtoLink = `mailto:saivamshig404@gmail.com?subject=${encodeURIComponent(
+        emailSubject
+      )}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = mailtoLink;
+
+      // Show success message
+      alert("Thank you for your application! Redirecting to email client...");
+    }
+  };
+
   return (
     <div className="bg-gradient-to-b from-blue-200 to-blue-100 min-h-screen font-sans">
       {/* Header Section */}
@@ -41,7 +131,7 @@ const ApplyForDistributorship: React.FC = () => {
           </motion.h2>
           <p className="text-lg">
             Cirro has become a household name in India, known for its purity,
-            advanced treatment process, and commitment to sustainability. Here’s
+            advanced treatment process, and commitment to sustainability. Here's
             why you should become a distributor:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -65,7 +155,7 @@ const ApplyForDistributorship: React.FC = () => {
               />
               <h3 className="text-xl font-semibold">Fastest Growing Brand</h3>
               <p className="text-center">
-                We are one of India’s fastest-growing packaged drinking water
+                We are one of India's fastest-growing packaged drinking water
                 brands with nationwide reach.
               </p>
             </div>
@@ -86,123 +176,152 @@ const ApplyForDistributorship: React.FC = () => {
       </section>
 
       {/* Application Form Section */}
-      <section className="py-16 px-6 md:px-20 bg-blue-50 text-blue-900">
-        <div className="max-w-4xl mx-auto">
-          <motion.h3
-            className="text-3xl font-semibold text-blue-700 text-center mb-8"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Distributor Application Form
-          </motion.h3>
-          <div className="bg-white shadow-lg rounded-lg p-8 space-y-6">
-            <p className="text-lg">
-              Apply today to become a part of Cirro’s rapidly expanding network
-              of distributors. We are looking for dynamic individuals who share
-              our passion for quality and growth.
-            </p>
-            <form action="#" method="POST" className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-lg text-blue-700">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="w-full px-4 py-3 bg-white border rounded-lg shadow-md text-blue-900"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-lg text-blue-700">
-                  Email ID
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="w-full px-4 py-3 bg-white border rounded-lg shadow-md text-blue-900"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="mobile" className="block text-lg text-blue-700">
-                  Mobile No.
-                </label>
-                <input
-                  type="tel"
-                  id="mobile"
-                  name="mobile"
-                  className="w-full px-4 py-3 bg-white border rounded-lg shadow-md text-blue-900"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="pincode"
-                  className="block text-lg text-blue-700"
-                >
-                  Pincode
-                </label>
-                <input
-                  type="text"
-                  id="pincode"
-                  name="pincode"
-                  className="w-full px-4 py-3 bg-white border rounded-lg shadow-md text-blue-900"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="city" className="block text-lg text-blue-700">
-                  City
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  className="w-full px-4 py-3 bg-white border rounded-lg shadow-md text-blue-900"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="state" className="block text-lg text-blue-700">
-                  State
-                </label>
-                <input
-                  type="text"
-                  id="state"
-                  name="state"
-                  className="w-full px-4 py-3 bg-white border rounded-lg shadow-md text-blue-900"
-                  required
-                />
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  name="terms"
-                  className="mr-2"
-                  required
-                />
-                <label htmlFor="terms" className="text-lg text-blue-700">
-                  I agree to the{" "}
-                  <a href="/terms" className="text-blue-700 underline">
-                    Terms & Conditions
-                  </a>
-                </label>
-              </div>
+      <main className="py-12 px-4">
+        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                  errors.name ? "border-red-500" : ""
+                }`}
+              />
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                  errors.email ? "border-red-500" : ""
+                }`}
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="mobile"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Mobile Number
+              </label>
+              <input
+                type="text"
+                id="mobile"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                  errors.mobile ? "border-red-500" : ""
+                }`}
+              />
+              {errors.mobile && (
+                <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="pincode"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Pincode
+              </label>
+              <input
+                type="text"
+                id="pincode"
+                name="pincode"
+                value={formData.pincode}
+                onChange={handleChange}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                  errors.pincode ? "border-red-500" : ""
+                }`}
+              />
+              {errors.pincode && (
+                <p className="mt-1 text-sm text-red-600">{errors.pincode}</p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="city"
+                className="block text-sm font-medium text-gray-700"
+              >
+                City
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                  errors.city ? "border-red-500" : ""
+                }`}
+              />
+              {errors.city && (
+                <p className="mt-1 text-sm text-red-600">{errors.city}</p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="state"
+                className="block text-sm font-medium text-gray-700"
+              >
+                State
+              </label>
+              <input
+                type="text"
+                id="state"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                  errors.state ? "border-red-500" : ""
+                }`}
+              />
+              {errors.state && (
+                <p className="mt-1 text-sm text-red-600">{errors.state}</p>
+              )}
+            </div>
+
+            <div className="flex justify-center mt-6">
               <button
                 type="submit"
-                className="w-full bg-blue-700 text-white py-3 rounded-lg shadow-md hover:bg-blue-800 transition"
+                className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 Submit Application
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-      </section>
+      </main>
 
       {/* Footer Section */}
       <footer className="bg-blue-200 text-blue-900 py-4 text-center">
