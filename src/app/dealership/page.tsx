@@ -22,7 +22,7 @@ const ApplyForDistributorship = () => {
     state: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -31,7 +31,21 @@ const ApplyForDistributorship = () => {
   };
 
   const validate = () => {
-    const newErrors = {};
+    const newErrors: {
+      name: string;
+      email: string;
+      mobile: string;
+      pincode: string;
+      city: string;
+      state: string;
+    } = {
+      name: "",
+      email: "",
+      mobile: "",
+      pincode: "",
+      city: "",
+      state: "",
+    };
 
     if (!formData.name) {
       newErrors.name = "Name is required";
@@ -69,7 +83,7 @@ const ApplyForDistributorship = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
       // Create email content with form data
