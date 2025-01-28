@@ -13,6 +13,7 @@ const ApplyForDistributorship = () => {
     state: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
     email: "",
@@ -80,37 +81,47 @@ const ApplyForDistributorship = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object.values(newErrors).every((error) => error === "");
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
-      // Create email content with form data
-      const emailSubject = "New Distributorship Application";
-      const emailBody = `
-Name: ${formData.name}
-Email: ${formData.email}
-Mobile: ${formData.mobile}
-Pincode: ${formData.pincode}
-City: ${formData.city}
-State: ${formData.state}
-      `;
+      setLoading(true);
+      try {
+        const response = await fetch("/api/apply", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
 
-      // Create mailto link
-      const mailtoLink = `mailto:saivamshig404@gmail.com?subject=${encodeURIComponent(
-        emailSubject
-      )}&body=${encodeURIComponent(emailBody)}`;
-      window.location.href = mailtoLink;
+        const data = await response.json();
 
-      // Show success message
-      alert("Thank you for your application! Redirecting to email client...");
+        if (!response.ok) {
+          throw new Error(data.message || "Submission failed");
+        }
+
+        alert("Thank you for your application! We will contact you soon.");
+        setFormData({
+          name: "",
+          email: "",
+          mobile: "",
+          pincode: "",
+          city: "",
+          state: "",
+        });
+      } catch (error: any) {
+        alert(
+          error.message || "Error submitting application. Please try again."
+        );
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <div className="bg-gradient-to-b from-blue-200 to-blue-100 min-h-screen font-sans">
-      {/* Header Section */}
       <header
         className="relative w-full h-96 bg-cover bg-center mb-12"
         style={{ backgroundImage: "url('/mountain2.jpeg')" }}
@@ -132,7 +143,6 @@ State: ${formData.state}
         </div>
       </header>
 
-      {/* Why Choose Us Section */}
       <section className="py-16 px-4 md:px-8 lg:px-20 text-blue-900 bg-white/50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto text-center space-y-8">
           <motion.h2
@@ -215,7 +225,6 @@ State: ${formData.state}
         </div>
       </section>
 
-      {/* Application Form Section */}
       <main className="py-16 px-4 md:px-8">
         <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-10">
           <h3 className="text-2xl md:text-3xl font-bold text-blue-800 mb-8 text-center">
@@ -240,6 +249,7 @@ State: ${formData.state}
                     errors.name ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                   placeholder="Enter your full name"
+                  disabled={loading}
                 />
                 {errors.name && (
                   <p className="mt-1 text-sm text-red-600">{errors.name}</p>
@@ -263,6 +273,7 @@ State: ${formData.state}
                     errors.email ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                   placeholder="Enter your email"
+                  disabled={loading}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -286,6 +297,7 @@ State: ${formData.state}
                     errors.mobile ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                   placeholder="Enter 10-digit mobile number"
+                  disabled={loading}
                 />
                 {errors.mobile && (
                   <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>
@@ -309,6 +321,7 @@ State: ${formData.state}
                     errors.pincode ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                   placeholder="Enter 6-digit pincode"
+                  disabled={loading}
                 />
                 {errors.pincode && (
                   <p className="mt-1 text-sm text-red-600">{errors.pincode}</p>
@@ -332,6 +345,7 @@ State: ${formData.state}
                     errors.city ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                   placeholder="Enter your city"
+                  disabled={loading}
                 />
                 {errors.city && (
                   <p className="mt-1 text-sm text-red-600">{errors.city}</p>
@@ -355,6 +369,7 @@ State: ${formData.state}
                     errors.state ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                   placeholder="Enter your state"
+                  disabled={loading}
                 />
                 {errors.state && (
                   <p className="mt-1 text-sm text-red-600">{errors.state}</p>
@@ -368,15 +383,15 @@ State: ${formData.state}
                 className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transform hover:scale-105 transition-all duration-200"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                disabled={loading}
               >
-                Submit Application
+                {loading ? "Submitting..." : "Submit Application"}
               </motion.button>
             </div>
           </form>
         </div>
       </main>
 
-      {/* Footer Section */}
       <footer className="bg-blue-400 text-white py-6 mt-16">
         <div className="container mx-auto px-4 text-center">
           <p className="text-blue-100">
