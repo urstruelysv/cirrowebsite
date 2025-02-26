@@ -7,9 +7,9 @@ const Middle = () => {
   return (
     <div className="flex flex-col w-full">
       {/* Images Container */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+      <div className="p-4 h-screen">
         <motion.div
-          className="relative h-full md:h-[400px]"
+          className="h-full md:h-[400px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
