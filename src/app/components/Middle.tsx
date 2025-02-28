@@ -21,7 +21,7 @@ const Middle = () => {
           />
         </motion.div>
 
-        <motion.div
+        {/* <motion.div
           className="relative h-full md:h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -32,7 +32,7 @@ const Middle = () => {
             alt="100% plastic neutral"
             className="w-full h-full object-cover rounded-lg"
           />
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );
