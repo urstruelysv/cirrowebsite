@@ -158,7 +158,7 @@ const Vision: React.FC = () => {
               <p className="text-xl mb-6">
                 Be a part of the fastest-growing brand in India. Whether you are
                 a distributor, a retailer, or just someone passionate about
-                purity, there’s a place for you in the Cirro family.
+                purity, there's a place for you in the Cirro family.
               </p>
               <Link
                 href="/dealership"
@@ -173,7 +173,7 @@ const Vision: React.FC = () => {
 
       {/* Footer Section */}
       <footer className="bg-blue-200 text-blue-900 py-4 text-center">
-        <p>&copy; Cirro. All rights reserved.</p>
+        <p>&copy; Athoes Vison Labs . All rights reserved.</p>
       </footer>
     </div>
   );

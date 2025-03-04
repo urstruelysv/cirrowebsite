@@ -23,7 +23,7 @@ const ContactUs: React.FC = () => {
             Contact Us
           </motion.h1>
           <p className="text-lg mt-2 text-center text-blue-900">
-            Get in touch with Cirro for any queries or feedback.
+            Get in touch with cirro for any queries or feedback.
           </p>
         </div>
       </header>
@@ -43,10 +43,10 @@ const ContactUs: React.FC = () => {
               Our Contact Information
             </h3>
             <p className="text-lg mb-2">
-              <strong>Email:</strong> contact@cirro.com
+              <strong>Email:</strong> ssvfoodandbevarages@gmail.com
             </p>
             <p className="text-lg mb-2">
-              <strong>Phone:</strong> +91-XXXXXXXXXX
+              <strong>Phone:</strong> +91846801112
             </p>
             <p className="text-lg mb-2">
               <strong>Address:</strong> SSV Foods and Beverages, SQ NO: 184/AA,
@@ -118,7 +118,7 @@ const ContactUs: React.FC = () => {
 
       {/* Footer Section */}
       <footer className="bg-blue-200 text-blue-900 py-4 text-center">
-        <p>&copy; AethosVisionLabs. All rights reserved.</p>
+        <p>&copy; Aethos Vision Labs. All rights reserved.</p>
       </footer>
     </div>
   );

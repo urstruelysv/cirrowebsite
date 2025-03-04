@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import Main from "./components/Main";
 import Middle from "./components/Middle";
 import Giveback from "./components/Giveback";
+import Fotter from "./components/Fotter";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
       <section className="min-h-screen ">
         <Middle />
       </section>
+      <Fotter />
     </div>
   );
 }
