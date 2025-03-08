@@ -46,7 +46,7 @@ const ContactUs: React.FC = () => {
               <strong>Email:</strong> ssvfoodandbeverages@gmail.com
             </p>
             <p className="text-lg mb-2">
-              <strong>Phone:</strong> +918464801112
+              <strong>Phone:</strong> +918464801112 | 9010190200 | 7286885570
             </p>
             <p className="text-lg mb-2">
               <strong>Address:</strong> SSV Foods and Beverages, Head Office :
