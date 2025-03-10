@@ -51,8 +51,8 @@ const ContactUs: React.FC = () => {
             <p className="text-lg mb-2">
               <strong>Address:</strong> SSV Foods and Beverages, Head Office :
               202, Esha Vasyam, Cyber Hills Colony, VIP Hills, Silicon Valley,
-              Hi-Tech City, Hyderabad, 500081 <br></br> Office : SQ NO: 184/AA,
-              186/AA, Gudur Village, Vikarabad, Telangana - 501502
+              Hi-Tech City, Hyderabad, 500081 <br></br> Office : H.NO 530/Raithu
+              colony , Shadnagar , RangaReddy , Telangana
             </p>
           </motion.div>
 
