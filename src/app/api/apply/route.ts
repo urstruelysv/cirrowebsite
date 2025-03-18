@@ -3,31 +3,31 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { distributorshipApplicationSchema } from "../../../lib/schema"; // Adjust the import path as needed
 import { Resend } from "resend";
-import { DistributorshipEmailTemplate } from "../../components/email-template"; // Your email template component
-import { ReactElement } from "react";
+import { DistributorshipEmailTemplate } from "../../components/email-template";
+import { ReactElement } from "react"; // Adjust the import path as needed
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export async function POST(request: Request) {
   try {
     const json = await request.json();
-
-    // Validate the incoming data using your Zod schema.
     const data = distributorshipApplicationSchema.parse(json);
+    const { name, email } = data;
 
-    // Destructure the validated fields.
-    const { name, email } = data; // you can extract other fields if needed
+    // Retrieve sender and recipient values from environment variables
+    const from = process.env.EMAIL_FROM || "Cirro <distributorship@cirro.com>";
+    const to = process.env.EMAIL_TO ? [process.env.EMAIL_TO] : [email];
 
-    // Generate the email using your React-based email template.
+    // Generate the email content using the React email template component
     const emailContent = DistributorshipEmailTemplate({
       firstName: name,
-      companyName: "Cirro", // adjust if needed
+      companyName: "Cirro",
     }) as ReactElement;
 
-    // Send the email via Resend.
+    // Send the email via Resend
     const response = await resend.emails.send({
-      from: "Cirro <distributorship@cirro.com>",
-      to: [email],
+      from,
+      to,
       subject: "Your Distributorship Application",
       react: emailContent,
     });
@@ -37,7 +37,6 @@ export async function POST(request: Request) {
       data: response,
     });
   } catch (error) {
-    // If the error is from Zod, it may indicate that one of the strings didn't match the expected pattern.
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 });
     }
