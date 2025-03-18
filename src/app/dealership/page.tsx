@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { distributorshipApplicationSchema } from "../../lib/schema"; // Adjust the path as needed
 
 const ApplyForDistributorship = () => {
   const [formData, setFormData] = useState({
@@ -31,92 +32,61 @@ const ApplyForDistributorship = () => {
     }));
   };
 
-  const validate = () => {
-    const newErrors: {
-      name: string;
-      email: string;
-      mobile: string;
-      pincode: string;
-      city: string;
-      state: string;
-    } = {
-      name: "",
-      email: "",
-      mobile: "",
-      pincode: "",
-      city: "",
-      state: "",
-    };
-
-    if (!formData.name) {
-      newErrors.name = "Name is required";
-    } else if (formData.name.length < 5) {
-      newErrors.name = "Name must be at least 5 characters long";
-    }
-
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
-    }
-
-    if (!formData.mobile) {
-      newErrors.mobile = "Mobile number is required";
-    } else if (!/^\d{10}$/.test(formData.mobile)) {
-      newErrors.mobile = "Mobile number is invalid";
-    }
-
-    if (!formData.pincode) {
-      newErrors.pincode = "Pincode is required";
-    } else if (!/^\d{6}$/.test(formData.pincode)) {
-      newErrors.pincode = "Pincode number is invalid";
-    }
-
-    if (!formData.city) {
-      newErrors.city = "City is required";
-    }
-
-    if (!formData.state) {
-      newErrors.state = "State is required";
-    }
-
-    setErrors(newErrors);
-    return Object.values(newErrors).every((error) => error === "");
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validate()) {
-      setLoading(true);
-      try {
-        const response = await fetch("/api/apply", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
 
-        const data = await response.json();
+    // Validate form data using the Zod schema
+    const result = distributorshipApplicationSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      setErrors({
+        name: fieldErrors.name ? fieldErrors.name[0] : "",
+        email: fieldErrors.email ? fieldErrors.email[0] : "",
+        mobile: fieldErrors.mobile ? fieldErrors.mobile[0] : "",
+        pincode: fieldErrors.pincode ? fieldErrors.pincode[0] : "",
+        city: fieldErrors.city ? fieldErrors.city[0] : "",
+        state: fieldErrors.state ? fieldErrors.state[0] : "",
+      });
+      return;
+    } else {
+      // Clear previous errors on successful validation
+      setErrors({
+        name: "",
+        email: "",
+        mobile: "",
+        pincode: "",
+        city: "",
+        state: "",
+      });
+    }
 
-        if (!response.ok) {
-          throw new Error(data.message || "Submission failed");
-        }
+    setLoading(true);
+    try {
+      const response = await fetch("/api/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-        alert("Thank you for your application! We will contact you soon.");
-        setFormData({
-          name: "",
-          email: "",
-          mobile: "",
-          pincode: "",
-          city: "",
-          state: "",
-        });
-      } catch (error: any) {
-        alert(
-          error.message || "Error submitting application. Please try again."
-        );
-      } finally {
-        setLoading(false);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Submission failed");
       }
+
+      alert("Thank you for your application! We will contact you soon.");
+      setFormData({
+        name: "",
+        email: "",
+        mobile: "",
+        pincode: "",
+        city: "",
+        state: "",
+      });
+    } catch (error: any) {
+      alert(error.message || "Error submitting application. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -165,11 +135,7 @@ const ApplyForDistributorship = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="flex flex-col items-center">
-                <img
-                  src="/quality-icon.png"
-                  alt="Quality"
-                  className="w-16 h-16 mb-4"
-                />
+                <img src="/uv.jpg" alt="Quality" className="w-16 h-16 mb-4" />
                 <h3 className="text-xl font-bold mb-3 text-blue-800">
                   Unmatched Quality
                 </h3>
@@ -187,7 +153,7 @@ const ApplyForDistributorship = () => {
             >
               <div className="flex flex-col items-center">
                 <img
-                  src="/growth-icon.png"
+                  src="/grwoth.jpeg"
                   alt="Growth"
                   className="w-16 h-16 mb-4"
                 />
@@ -208,7 +174,7 @@ const ApplyForDistributorship = () => {
             >
               <div className="flex flex-col items-center">
                 <img
-                  src="/support-icon.png"
+                  src="/mark.jpeg"
                   alt="Support"
                   className="w-16 h-16 mb-4"
                 />
@@ -245,11 +211,11 @@ const ApplyForDistributorship = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  placeholder="Enter your full name"
+                  disabled={loading}
                   className={`w-full px-4 py-2 rounded-lg border ${
                     errors.name ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                  placeholder="Enter your full name"
-                  disabled={loading}
                 />
                 {errors.name && (
                   <p className="mt-1 text-sm text-red-600">{errors.name}</p>
@@ -269,11 +235,11 @@ const ApplyForDistributorship = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  placeholder="Enter your email"
+                  disabled={loading}
                   className={`w-full px-4 py-2 rounded-lg border ${
                     errors.email ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                  placeholder="Enter your email"
-                  disabled={loading}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -293,11 +259,11 @@ const ApplyForDistributorship = () => {
                   name="mobile"
                   value={formData.mobile}
                   onChange={handleChange}
+                  placeholder="Enter 10-digit mobile number"
+                  disabled={loading}
                   className={`w-full px-4 py-2 rounded-lg border ${
                     errors.mobile ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                  placeholder="Enter 10-digit mobile number"
-                  disabled={loading}
                 />
                 {errors.mobile && (
                   <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>
@@ -317,11 +283,11 @@ const ApplyForDistributorship = () => {
                   name="pincode"
                   value={formData.pincode}
                   onChange={handleChange}
+                  placeholder="Enter 6-digit pincode"
+                  disabled={loading}
                   className={`w-full px-4 py-2 rounded-lg border ${
                     errors.pincode ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                  placeholder="Enter 6-digit pincode"
-                  disabled={loading}
                 />
                 {errors.pincode && (
                   <p className="mt-1 text-sm text-red-600">{errors.pincode}</p>
@@ -341,11 +307,11 @@ const ApplyForDistributorship = () => {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
+                  placeholder="Enter your city"
+                  disabled={loading}
                   className={`w-full px-4 py-2 rounded-lg border ${
                     errors.city ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                  placeholder="Enter your city"
-                  disabled={loading}
                 />
                 {errors.city && (
                   <p className="mt-1 text-sm text-red-600">{errors.city}</p>
@@ -365,11 +331,11 @@ const ApplyForDistributorship = () => {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
+                  placeholder="Enter your state"
+                  disabled={loading}
                   className={`w-full px-4 py-2 rounded-lg border ${
                     errors.state ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                  placeholder="Enter your state"
-                  disabled={loading}
                 />
                 {errors.state && (
                   <p className="mt-1 text-sm text-red-600">{errors.state}</p>
@@ -380,10 +346,10 @@ const ApplyForDistributorship = () => {
             <div className="flex justify-center mt-8">
               <motion.button
                 type="submit"
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transform hover:scale-105 transition-all duration-200"
+                disabled={loading}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                disabled={loading}
+                className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200"
               >
                 {loading ? "Submitting..." : "Submit Application"}
               </motion.button>
@@ -395,7 +361,7 @@ const ApplyForDistributorship = () => {
       <footer className="bg-blue-400 text-white py-6 mt-16">
         <div className="container mx-auto px-4 text-center">
           <p className="text-blue-100">
-            &copy; {new Date().getFullYear()} aethos vison labs. All rights
+            &copy; {new Date().getFullYear()} Aethos Vision Labs. All rights
             reserved.
           </p>
         </div>
