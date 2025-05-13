@@ -103,7 +103,7 @@ const OurStory: React.FC = () => {
       </section>
 
       {/* Video Section */}
-      <section className="py-10 bg-blue-100 text-center">
+      {/* <section className="py-10 bg-blue-100 text-center">
         <motion.h2
           className="text-4xl font-bold text-blue-700 mb-4"
           initial={{ opacity: 0, y: -30 }}
@@ -124,6 +124,48 @@ const OurStory: React.FC = () => {
             title="Cirro Video"
             allowFullScreen
           ></iframe>
+        </motion.div>
+      </section> */}
+
+      {/* Instagram Feed Section */}
+      <section className="py-16 bg-gradient-to-b from-blue-100 to-blue-200">
+        <motion.div
+          className="max-w-6xl mx-auto px-4"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h2
+            className="text-4xl font-bold text-blue-700 text-center mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Follow Our Journey
+          </motion.h2>
+          <motion.p
+            className="text-lg text-blue-900 text-center mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            Stay connected with Cirro on Instagram
+          </motion.p>
+          <motion.div
+            className="bg-white rounded-xl shadow-xl p-6"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <div className="aspect-w-16 aspect-h-9">
+              <iframe
+                src="https://www.instagram.com/cirro_water/embed"
+                className="w-full h-[600px] border-0"
+                title="Cirro Instagram Feed"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </motion.div>
         </motion.div>
       </section>
 

@@ -51,13 +51,13 @@ export default function Hero() {
       ))}
 
       {/* Static Centered Bottle */}
-      <div className="absolute inset-x-0 top-[20%] flex justify-center">
+      {/* <div className="absolute inset-x-0 top-[20%] flex justify-center">
         <img
           src="/bottle.png"
           alt="Himalayan Water Bottle"
           className="w-[470px] h-[470px] object-contain"
         />
-      </div>
+      </div> */}
 
       {/* Main Content Container */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">

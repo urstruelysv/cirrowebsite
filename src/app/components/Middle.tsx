@@ -107,7 +107,7 @@ export default function Page() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2 }}
         >
-          <div className="relative">
+          <div className="relative flex flex-col items-center">
             <motion.div
               className="absolute -inset-4 rounded-full bg-blue-300 bg-opacity-30 blur-xl"
               animate={{
@@ -115,15 +115,49 @@ export default function Page() {
               }}
               transition={{ duration: 3, repeat: Infinity }}
             />
-            <motion.img
-              src="/cirro1l.png"
-              alt="Cirro Water Bottle"
-              className="w-full max-w-md lg:max-w-lg h-auto object-contain relative z-10"
-              whileHover={{
-                y: -10,
-                transition: { yoyo: Infinity, duration: 1.5 },
-              }}
-            />
+            {/* Replacing bottle image with a floating cloud illustration */}
+            <svg
+              width="220"
+              height="140"
+              viewBox="0 0 220 140"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="relative z-10"
+            >
+              <motion.ellipse
+                cx="110"
+                cy="90"
+                rx="90"
+                ry="40"
+                fill="#E0F2FE"
+                initial={{ opacity: 0.7 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.5 }}
+              />
+              <motion.ellipse
+                cx="70"
+                cy="70"
+                rx="40"
+                ry="30"
+                fill="#BAE6FD"
+                initial={{ opacity: 0.7 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.8, delay: 0.2 }}
+              />
+              <motion.ellipse
+                cx="150"
+                cy="70"
+                rx="35"
+                ry="25"
+                fill="#7DD3FC"
+                initial={{ opacity: 0.7 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 2, delay: 0.4 }}
+              />
+            </svg>
+            <span className="mt-6 text-blue-100 text-xl font-semibold drop-shadow-lg">
+              Pure as the clouds above
+            </span>
           </div>
         </motion.div>
       </div>
