@@ -74,11 +74,11 @@ const Vision: React.FC = () => {
             </motion.h3>
             <div className="flex justify-around space-x-6">
               <div className="w-1/4 text-center">
-                <img
-                  src="/icon-purity.png"
-                  alt="Purity Icon"
-                  className="w-16 mx-auto mb-4"
-                />
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl bg-blue-100 rounded-full shadow">
+                  <span role="img" aria-label="Purity">
+                    💧
+                  </span>
+                </div>
                 <p className="font-medium">Purity</p>
                 <p className="text-sm text-gray-700">
                   Cirro stands for unmatched purity in every drop of water we
@@ -86,11 +86,11 @@ const Vision: React.FC = () => {
                 </p>
               </div>
               <div className="w-1/4 text-center">
-                <img
-                  src="/icon-sustainability.png"
-                  alt="Sustainability Icon"
-                  className="w-16 mx-auto mb-4"
-                />
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl bg-blue-100 rounded-full shadow">
+                  <span role="img" aria-label="Sustainability">
+                    🌱
+                  </span>
+                </div>
                 <p className="font-medium">Sustainability</p>
                 <p className="text-sm text-gray-700">
                   We are committed to sustainability by using eco-friendly
@@ -98,11 +98,11 @@ const Vision: React.FC = () => {
                 </p>
               </div>
               <div className="w-1/4 text-center">
-                <img
-                  src="/icon-innovation.png"
-                  alt="Innovation Icon"
-                  className="w-16 mx-auto mb-4"
-                />
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl bg-blue-100 rounded-full shadow">
+                  <span role="img" aria-label="Innovation">
+                    💡
+                  </span>
+                </div>
                 <p className="font-medium">Innovation</p>
                 <p className="text-sm text-gray-700">
                   At Cirro, we constantly innovate to offer the best quality,
@@ -137,7 +137,7 @@ const Vision: React.FC = () => {
               transition={{ duration: 0.8 }}
             >
               <img
-                src="/growth-chart.png"
+                src="/grwoth.jpeg"
                 alt="Growth Chart"
                 className="w-2/3 shadow-lg rounded-lg"
               />
