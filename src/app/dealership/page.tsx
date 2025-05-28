@@ -2,89 +2,32 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { distributorshipApplicationSchema } from "../../lib/schema"; // Adjust the path as needed
 
 const ApplyForDistributorship = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    pincode: "",
-    city: "",
-    state: "",
-  });
-
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    pincode: "",
-    city: "",
-    state: "",
-  });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Validate form data using the Zod schema
-    const result = distributorshipApplicationSchema.safeParse(formData);
-    if (!result.success) {
-      const fieldErrors = result.error.flatten().fieldErrors;
-      setErrors({
-        name: fieldErrors.name ? fieldErrors.name[0] : "",
-        email: fieldErrors.email ? fieldErrors.email[0] : "",
-        mobile: fieldErrors.mobile ? fieldErrors.mobile[0] : "",
-        pincode: fieldErrors.pincode ? fieldErrors.pincode[0] : "",
-        city: fieldErrors.city ? fieldErrors.city[0] : "",
-        state: fieldErrors.state ? fieldErrors.state[0] : "",
-      });
-      return;
-    } else {
-      // Clear previous errors on successful validation
-      setErrors({
-        name: "",
-        email: "",
-        mobile: "",
-        pincode: "",
-        city: "",
-        state: "",
-      });
-    }
-
     setLoading(true);
+    setError("");
+    setSuccess(false);
+
     try {
-      const response = await fetch("/api/apply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Submission failed");
+      // Simple email validation
+      if (!email.includes("@") || !email.includes(".")) {
+        throw new Error("Please enter a valid email address");
       }
 
-      alert("Thank you for your application! We will contact you soon.");
-      setFormData({
-        name: "",
-        email: "",
-        mobile: "",
-        pincode: "",
-        city: "",
-        state: "",
-      });
+      // Simulate a small delay for better UX
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      setSuccess(true);
+      setEmail("");
     } catch (error: any) {
-      alert(error.message || "Error submitting application. Please try again.");
+      setError(error.message || "Please enter a valid email address");
     } finally {
       setLoading(false);
     }
@@ -128,65 +71,43 @@ const ApplyForDistributorship = () => {
             advanced treatment process, and commitment to sustainability.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            <motion.div
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className="flex flex-col items-center">
-                <img src="/uv.jpg" alt="Quality" className="w-16 h-16 mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-blue-800">
-                  Unmatched Quality
-                </h3>
-                <p className="text-blue-600">
-                  Our water is treated with RO + UV + Ozonization to ensure
-                  maximum purity and taste.
-                </p>
-              </div>
-            </motion.div>
-            <motion.div
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <div className="flex flex-col items-center">
-                <img
-                  src="/grwoth.jpeg"
-                  alt="Growth"
-                  className="w-16 h-16 mb-4"
-                />
-                <h3 className="text-xl font-bold mb-3 text-blue-800">
-                  Fastest Growing Brand
-                </h3>
-                <p className="text-blue-600">
-                  We are one of India's fastest-growing packaged drinking water
-                  brands with nationwide reach.
-                </p>
-              </div>
-            </motion.div>
-            <motion.div
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
-              <div className="flex flex-col items-center">
-                <img
-                  src="/mark.jpeg"
-                  alt="Support"
-                  className="w-16 h-16 mb-4"
-                />
-                <h3 className="text-xl font-bold mb-3 text-blue-800">
-                  Comprehensive Support
-                </h3>
-                <p className="text-blue-600">
-                  We offer robust marketing strategies, advertising, and
-                  brand-building support to our distributors.
-                </p>
-              </div>
-            </motion.div>
+            {[
+              {
+                icon: "/uv.jpg",
+                title: "Unmatched Quality",
+                desc: "Our water is treated with RO + UV + Ozonization to ensure maximum purity and taste.",
+              },
+              {
+                icon: "/grwoth.jpeg",
+                title: "Fastest Growing Brand",
+                desc: "We are one of India's fastest-growing packaged drinking water brands with nationwide reach.",
+              },
+              {
+                icon: "/mark.jpeg",
+                title: "Comprehensive Support",
+                desc: "We offer robust marketing strategies, advertising, and brand-building support to our distributors.",
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 * (index + 1) }}
+              >
+                <div className="flex flex-col items-center">
+                  <img
+                    src={item.icon}
+                    alt={item.title}
+                    className="w-16 h-16 mb-4"
+                  />
+                  <h3 className="text-xl font-bold mb-3 text-blue-800">
+                    {item.title}
+                  </h3>
+                  <p className="text-blue-600">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -194,178 +115,71 @@ const ApplyForDistributorship = () => {
       <main className="py-16 px-4 md:px-8">
         <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-10">
           <h3 className="text-2xl md:text-3xl font-bold text-blue-800 mb-8 text-center">
-            Start Your Journey with Us
+            Start Your Journey with Cirro
           </h3>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter your full name"
-                  disabled={loading}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.name ? "border-red-500" : "border-gray-300"
-                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-                )}
-              </div>
+          <p className="text-center text-gray-600 mb-6">
+            For Distributorship drop a message
+          </p>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email"
-                  disabled={loading}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                )}
-              </div>
+          <div className="space-y-6 mt-2">
+            <motion.a
+              href="https://wa.me/918464801112"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center justify-center gap-3 bg-green-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 transition-all duration-200 w-full"
+            >
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              Text us on WhatsApp
+            </motion.a>
 
-              <div>
-                <label
-                  htmlFor="mobile"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
-                  Mobile Number
-                </label>
-                <input
-                  type="text"
-                  id="mobile"
-                  name="mobile"
-                  value={formData.mobile}
-                  onChange={handleChange}
-                  placeholder="Enter 10-digit mobile number"
-                  disabled={loading}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.mobile ? "border-red-500" : "border-gray-300"
-                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                />
-                {errors.mobile && (
-                  <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="pincode"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
-                  Pincode
-                </label>
-                <input
-                  type="text"
-                  id="pincode"
-                  name="pincode"
-                  value={formData.pincode}
-                  onChange={handleChange}
-                  placeholder="Enter 6-digit pincode"
-                  disabled={loading}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.pincode ? "border-red-500" : "border-gray-300"
-                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                />
-                {errors.pincode && (
-                  <p className="mt-1 text-sm text-red-600">{errors.pincode}</p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="city"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
-                  City
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  placeholder="Enter your city"
-                  disabled={loading}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.city ? "border-red-500" : "border-gray-300"
-                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                />
-                {errors.city && (
-                  <p className="mt-1 text-sm text-red-600">{errors.city}</p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="state"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
-                  State
-                </label>
-                <input
-                  type="text"
-                  id="state"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleChange}
-                  placeholder="Enter your state"
-                  disabled={loading}
-                  className={`w-full px-4 py-2 rounded-lg border ${
-                    errors.state ? "border-red-500" : "border-gray-300"
-                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
-                />
-                {errors.state && (
-                  <p className="mt-1 text-sm text-red-600">{errors.state}</p>
-                )}
-              </div>
+            <div className="mt-8">
+              <form onSubmit={handleEmailSubmit} className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Drop your email and we'll contact you
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      disabled={loading}
+                      className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                      required
+                    />
+                    <motion.button
+                      type="submit"
+                      disabled={loading}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200 disabled:opacity-50"
+                    >
+                      {loading ? "Submitting..." : "Submit"}
+                    </motion.button>
+                  </div>
+                </div>
+              </form>
+              {error && (
+                <p className="text-red-600 mt-2 text-sm text-center">{error}</p>
+              )}
+              {success && (
+                <p className="text-green-600 mt-2 text-sm text-center">
+                  Email submitted successfully!
+                </p>
+              )}
             </div>
-
-            <div className="flex justify-center mt-8">
-              <motion.button
-                type="submit"
-                disabled={loading}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200"
-              >
-                {loading ? "Submitting..." : "Submit Application"}
-              </motion.button>
-            </div>
-          </form>
+          </div>
         </div>
       </main>
-
-      <footer className="bg-blue-400 text-white py-6 mt-16">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-blue-100">
-            &copy; {new Date().getFullYear()} Aethos Vision Labs. All rights
-            reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
